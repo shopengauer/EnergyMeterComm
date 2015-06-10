@@ -1,11 +1,14 @@
 package com.vspavlov.config.fxml;
 
+import com.vspavlov.aspects.LoggingAspect;
 import com.vspavlov.fxmlcontroller.FXMLController;
 import javafx.fxml.FXMLLoader;
+import jssc.SerialPort;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +18,7 @@ import java.io.InputStream;
  */
 @Configuration
 @ComponentScan
+//@EnableAspectJAutoProxy
 public class SpringConfig {
 
 
@@ -36,4 +40,12 @@ public class SpringConfig {
             return loader.getController();
         }
     }
+
+
+    @Bean
+    public LoggingAspect loggingAspect() {
+        return new LoggingAspect();
+    }
+
+
 }

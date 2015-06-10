@@ -1,5 +1,6 @@
 package com.vspavlov.web;
 
+import jssc.SerialPort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -10,11 +11,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
 
-
     @RequestMapping(value = "/")
     @ResponseBody
     public String rest(){
-        return "Hello Energy Meter";
+        return String.valueOf(SerialPort.BAUDRATE_115200);
     }
 
 }

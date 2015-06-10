@@ -4,10 +4,12 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * Created by Vasiliy on 08.06.2015.
  */
+
 public class AbstractJavaFxApplicationSupport extends Application {
 
     private static String[] savedArgs;
