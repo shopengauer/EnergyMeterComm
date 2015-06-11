@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * Created by Vasiliy on 08.06.2015.
  */
 @Component
-public class OpenComPortListener implements ApplicationListener<OpenComPortEvent>, SerialPortEventListener {
+public class OpenComPortListener implements ApplicationListener<OpenComPortEvent>{
 
     private Logger logger = LoggerFactory.getLogger(OpenComPortListener.class);
 
@@ -28,6 +28,8 @@ public class OpenComPortListener implements ApplicationListener<OpenComPortEvent
 
     @Autowired
     private SerialComPortContainer serialComPortContainer;
+    @Autowired
+    private PortRxListener portRxListener;
 
 
     @Override
@@ -37,25 +39,28 @@ public class OpenComPortListener implements ApplicationListener<OpenComPortEvent
 
        try{
            serialPort.openPort();
-           serialPort.setParams(openComPortEvent.getBaudrate(), openComPortEvent.getDatabits(), openComPortEvent.getStopbits(), openComPortEvent.getParity());
+          int baudRate = openComPortEvent.getBaudrate();
+          int databits = openComPortEvent.getDatabits();
+          int stopBits =  openComPortEvent.getStopbits();
+          int parity = openComPortEvent.getParity();
+
+           serialPort.setParams(baudRate, databits, stopBits, parity);
             logger.info("Port {} is opened: {}", serialPort.getPortName(), serialPort.isOpened());
-            serialPort.addEventListener(new PortRxListener(), SerialPort.MASK_RXCHAR);
+          logger.info("Baudrate: {}, Databits {}, Stopbits: {}, Parity: {}", baudRate,databits,stopBits,parity);
+
+           serialPort.addEventListener(portRxListener, SerialPort.MASK_RXCHAR);
             serialComPortContainer.addSerialPort(serialPort);
+            logger.info("Serial port size {}",serialComPortContainer.getSerialPorts().size());
        // serialPort.writeBytes("Test string".getBytes());
 
         //serialPort.closePort();
        }catch (SerialPortException e){
            logger.info(e.getExceptionType());
+
            serialPort = null;
            controller.getCircle().setFill(new Color(0.1, 0.2, 0.3, 0.4));
        }
 
-
-
     }
 
-    @Override
-    public void serialEvent(SerialPortEvent serialPortEvent) {
-
-    }
 }

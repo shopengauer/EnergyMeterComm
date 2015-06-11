@@ -6,8 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -21,6 +21,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
 
+
 import java.net.URL;
 import java.util.*;
 
@@ -32,6 +33,9 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     private ApplicationEventPublisher eventPublisher;
     private Logger logger = LoggerFactory.getLogger(FXMLController.class);
+
+    public FXMLController() {
+    }
 
 
     @Override
@@ -64,7 +68,14 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
     @FXML
     private AnchorPane view;
 
+    @FXML
+    private Button sendBtn;
 
+    @FXML
+    private TextArea rcvTextArea;
+
+    @FXML
+    private TextField sendTextField;
 
 
     public AnchorPane getView() {
@@ -142,6 +153,11 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     }
 
+    @FXML
+    void handleSendBtn(ActionEvent event) {
+
+    }
+
 
     @FXML
     private Circle circle;
@@ -152,5 +168,13 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     public void setCircle(Circle circle) {
         this.circle = circle;
+    }
+
+    public ApplicationEventPublisher getEventPublisher() {
+        return eventPublisher;
+    }
+
+    public TextArea getRcvTextArea() {
+        return rcvTextArea;
     }
 }

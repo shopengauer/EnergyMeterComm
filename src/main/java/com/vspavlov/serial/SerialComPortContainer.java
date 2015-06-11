@@ -2,9 +2,13 @@ package com.vspavlov.serial;
 
 import com.vspavlov.eventlisteners.OpenComPortEvent;
 import jssc.SerialPort;
+import jssc.SerialPortException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -12,6 +16,8 @@ import java.util.List;
  */
 @Component
 public class SerialComPortContainer {
+
+    private Logger logger = LoggerFactory.getLogger(SerialComPortContainer.class);
 
     private List<SerialPort> serialPorts = new ArrayList<>();
 
@@ -26,4 +32,39 @@ public class SerialComPortContainer {
     public List<SerialPort> getSerialPorts() {
         return serialPorts;
     }
+
+    public SerialPort getSerialPortByComNumber(String comPortNumber){
+
+        Iterator<SerialPort> serialPortIterator = serialPorts.iterator();
+        SerialPort sp = null;
+        while(serialPortIterator.hasNext())
+        {
+            sp = serialPortIterator.next();
+            if(sp.getPortName().equals(comPortNumber)){
+                return sp;
+            }
+        }
+
+        return null;
+    }
+
+    public void closeAllPorts(){
+        Iterator<SerialPort> serialPortIterator = serialPorts.iterator();
+        SerialPort sp = null;
+        while(serialPortIterator.hasNext())
+        {
+            sp = serialPortIterator.next();
+            if(sp.isOpened()){
+                try {
+                    sp.closePort();
+                } catch (SerialPortException e) {
+                    logger.error("Error close com port: {}", sp.getPortName());
+                }
+            }
+        }
+
+    }
+
+
+
 }

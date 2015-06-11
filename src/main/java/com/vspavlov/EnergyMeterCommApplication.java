@@ -1,6 +1,7 @@
 package com.vspavlov;
 
 import com.vspavlov.fxmlcontroller.FXMLController;
+import com.vspavlov.serial.SerialComPortContainer;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -29,6 +30,10 @@ public class EnergyMeterCommApplication extends AbstractJavaFxApplicationSupport
     @Autowired
     @Qualifier(value = "fxml")
     private FXMLController fxmlController;
+    @Autowired
+    private SerialComPortContainer serialComPortContainer;
+
+
     // @Autowired
    // @Qualifier(value = "fxml")
     //private Initializable  fxController;
@@ -62,6 +67,12 @@ public class EnergyMeterCommApplication extends AbstractJavaFxApplicationSupport
 
 
 }
+
+
+    @Override
+    public void stop() throws Exception {
+       serialComPortContainer.closeAllPorts();
+    }
 
     public static void main(String[] args) {
     launchApp(EnergyMeterCommApplication.class, args);
