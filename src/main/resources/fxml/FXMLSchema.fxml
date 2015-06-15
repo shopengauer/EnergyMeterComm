@@ -30,7 +30,8 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Port">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem fx:id="comPortConfigMenuItem" mnemonicParsing="false" onAction="#handleComPortConfigMenuItem" text="COM Port Config" />
+                        <MenuItem mnemonicParsing="false" text="Unspecified Action" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Options">

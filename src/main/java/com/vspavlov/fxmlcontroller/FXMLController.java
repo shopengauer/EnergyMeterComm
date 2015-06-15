@@ -17,6 +17,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Component;
@@ -33,6 +35,11 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     private ApplicationEventPublisher eventPublisher;
     private Logger logger = LoggerFactory.getLogger(FXMLController.class);
+
+    @Qualifier("comPortConfig")
+    @Autowired
+    private FXMLComPortConfigController fxmlComPortConfigController;
+
 
     public FXMLController() {
     }
@@ -76,6 +83,9 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     @FXML
     private TextField sendTextField;
+
+    @FXML
+    private MenuItem comPortConfigMenuItem;
 
 
     public AnchorPane getView() {
@@ -155,6 +165,12 @@ public class FXMLController implements Initializable,ApplicationEventPublisherAw
 
     @FXML
     void handleSendBtn(ActionEvent event) {
+
+    }
+
+
+    @FXML
+    void handleComPortConfigMenuItem(ActionEvent event) {
 
     }
 

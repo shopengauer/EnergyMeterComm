@@ -58,7 +58,8 @@ public class PortRxListener implements SerialPortEventListener {
                 logger.info("Bytes in RX buffer {}",countBytesInBuffer);
                 String buffer = serialPort.readHexString(countBytesInBuffer," 0X");
                 Platform.runLater(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         controller.getRcvTextArea().appendText(buffer + "\n");
                     }
                 });
